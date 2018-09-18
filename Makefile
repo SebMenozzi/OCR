@@ -1,7 +1,7 @@
 .PHONY : clean, fclean, re
 .SUFFIXES :
 
-NAME = main
+NAME = xor
 
 SRC =	main.c
 

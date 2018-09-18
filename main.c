@@ -140,7 +140,7 @@ void display_result() {
     );
 }
 
-int main(void) {
+int main() {
     generate_random_input_to_hidden_weights();
     generate_random_hidden_to_output_weights();
 
