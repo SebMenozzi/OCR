@@ -3,7 +3,7 @@
 
 NAME = mmgd
 
-SRC =	main.c xor.c
+SRC =	main.c xor.c ocr.c
 
 OBJ = $(SRC:.c=.o)
 
