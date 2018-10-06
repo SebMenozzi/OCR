@@ -1,4 +1,4 @@
-# OCR By MMGD team **(EPITA SPE project)**
+# OCR by MMGD team (EPITA SPE PROJECT - 2018)
 
 This repository contains an ocr project done by:
 - **M**archeron Laure
