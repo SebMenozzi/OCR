@@ -17,19 +17,23 @@ int main(int argc, char *argv[])
         }
         else if(strcmp(argv[1], "--XOR") == 0)
         {
-            printf("Start the XOR neural network...");
             XOR();
         }
         else if(strcmp(argv[1], "--OCR") == 0)
         {
-            printf("Start the OCR neural network...");
+            OCR();
         }
     }
     else
     {
-      printf("#------#\n");
-      printf("| MMGD |\n");
-      printf("#------#\n");
+      printf("#-----------#\n");
+      printf("| MMGD TEAM |\n");
+      printf("#-----------#\n\n");
+      printf("BY\n");
+      printf("- Marcheron Laure\n");
+      printf("- Menozzi Sebastien\n");
+      printf("- Goré Benjamin\n");
+      printf("- Denglos Gauthier\n\n");
     }
-    return(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
