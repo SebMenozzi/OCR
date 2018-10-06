@@ -1,9 +1,9 @@
 .PHONY : clean, fclean, re
 .SUFFIXES :
 
-NAME = xor
+NAME = mmgd
 
-SRC =	main.c
+SRC =	main.c xor.c
 
 OBJ = $(SRC:.c=.o)
 
