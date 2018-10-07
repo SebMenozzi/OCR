@@ -1,6 +1,5 @@
 #include "xor.h"
 
-/* GLOBAL */
 const float training_data[4][2] = {
     { 1, 0 },
     { 1, 1 },
@@ -26,7 +25,7 @@ float error_rate; // for debug
 
 /* UTILS */
 
-double random_value() {
+double random_value() { // between -1 and 1
     return 2.0f * rand() / RAND_MAX - 1;
 }
 
