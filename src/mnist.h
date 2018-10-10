@@ -4,8 +4,6 @@
 #include <fcntl.h>
 #include <string.h>
 
-// set appropriate path for data
-
 #define TRAIN_IMAGE "./data/mnist/train-images-idx3-ubyte"
 #define TRAIN_LABEL "./data/mnist/train-labels-idx1-ubyte"
 #define TEST_IMAGE "./data/mnist/t10k-images-idx3-ubyte"

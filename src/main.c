@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         }
         else if(strcmp(argv[1], "--OCR") == 0)
         {
-            OCR();
+            OCR(argv[2]);
         }
     }
     else
