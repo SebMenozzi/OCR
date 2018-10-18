@@ -9,7 +9,7 @@ ifeq ($(OS), Darwin) # if os is macos
     IFLAGS = -I/Library/Frameworks/SDL2.framework/Headers/ -I/Library/Frameworks/SDL2_image.framework/Headers/
     SDL2FLAGS = ``
 else
-    LDFLAGS = -lSDL2 -lSDL2_image
+    LDFLAGS = -lSDL2 -lSDL2_image -lm
     SDL2FLAGS = `sdl2-config --libs --cflags`
 endif
 NAME = mmgd
