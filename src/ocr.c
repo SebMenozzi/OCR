@@ -1,5 +1,4 @@
 #include "ocr.h"
-#include "utils/sdl_functions.h"
 
 const int WIDTH  = 1300;
 const int HEIGHT = 900;
@@ -18,6 +17,7 @@ void OCR(char* file)
   SDL_Surface* image = load_image(file);
   greyscale(image);
   black_and_white(image);
+  parcours_horizontal(image);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 

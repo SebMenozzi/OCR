@@ -13,7 +13,7 @@ else
     SDL2FLAGS = `sdl2-config --libs --cflags`
 endif
 NAME = mmgd
-SRC =	src/main.c src/xor.c src/ocr.c src/utils/sdl_functions.c
+SRC =	src/main.c src/xor.c src/ocr.c src/utils/sdl_functions.c src/utils/segmentation.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
