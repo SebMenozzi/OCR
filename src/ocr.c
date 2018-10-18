@@ -12,12 +12,14 @@ void OCR(char* file)
   int quit = 0;
   SDL_Event event;
 
-  SDL_Window* window = SDL_CreateWindow("Sprite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
-  SDL_Renderer* render = SDL_CreateRenderer(window,-1,0);
+  SDL_Window* window = SDL_CreateWindow("MMGD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
+  SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
 
   SDL_Surface* image = load_image(file);
   greyscale(image);
   blacknwhite(image);
+
+  SDL_RenderClear(render);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 
