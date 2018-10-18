@@ -19,8 +19,6 @@ void OCR(char* file)
   greyscale(image);
   blacknwhite(image);
 
-  SDL_RenderClear(render);
-
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 
   while(!quit){
