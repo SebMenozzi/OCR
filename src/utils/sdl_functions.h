@@ -9,6 +9,6 @@ void init_sdl(void);
 void wait_for_keypressed(void);
 SDL_Surface* load_image(char *path);
 void greyscale(SDL_Surface* image);
-void blacknwhite(SDL_Surface* image);
+void black_and_white(SDL_Surface* image);
 
 #endif

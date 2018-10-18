@@ -63,23 +63,16 @@ void greyscale(SDL_Surface *image)
   }
 }
 
-void blacknwhite(SDL_Surface *image)
+void black_and_white(SDL_Surface *image)
 {
   for(int y = 0; y < image->h; y++) {
     for(int x = 0; x < image->w; x++) {
       Uint32 pixel = get_pixel(image, x, y);
       Uint8 r = 0, g = 0, b = 0;
       SDL_GetRGB(pixel, image->format, &r, &g, &b);
-      if(r >= 127 && g >= 127 && b >= 127) {
-        r = 255;
-        g = 255;
-        b = 255;
-      }
-      else {
-        r = 0;
-        g = 0;
-        b = 0;
-      }
+      r = (r >= 127) ? 255 : 0;
+      g = (g >= 127) ? 255 : 0;
+      b = (b >= 127) ? 255 : 0;
       pixel = SDL_MapRGB(image->format, r, g, b);
       put_pixel(image, x, y, pixel);
     }

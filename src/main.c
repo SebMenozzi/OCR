@@ -4,7 +4,7 @@ void help()
 {
     printf("HELP : \n");
     printf("  --XOR  This function will start the XOR neural network (proof of concept)\n");
-    printf("  --OCR  This function will start the OCR neural network\n");
+    printf("  --OCR \"path\" This function will start the OCR neural network\n");
 }
 
 int main(int argc, char *argv[])

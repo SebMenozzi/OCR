@@ -1,8 +1,8 @@
 #include "ocr.h"
 #include "utils/sdl_functions.h"
 
-const int WIDTH  = 800;
-const int HEIGHT = 600;
+const int WIDTH  = 1300;
+const int HEIGHT = 900;
 
 void OCR(char* file)
 {
@@ -17,12 +17,12 @@ void OCR(char* file)
 
   SDL_Surface* image = load_image(file);
   greyscale(image);
-  blacknwhite(image);
+  black_and_white(image);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 
   while(!quit){
-    SDL_Rect dstrect = { 0, 0, image->w/2, image->h/2};
+    SDL_Rect dstrect = { 0, 0, image->w, image->h};
 
     SDL_PollEvent(&event);
     switch (event.type){
