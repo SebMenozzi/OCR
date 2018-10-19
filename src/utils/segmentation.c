@@ -82,9 +82,9 @@ void parcours_vertical(SDL_Surface *image, int startline, int endline)
 
 void remplissage(SDL_Surface *image, int startline, int endline, int startcolum, int endcolum)
 {
-  for (int y = startline; y < endline; y++)
+  for (int y = startline; y <= endline; y++)
   {
-    for (int x = startcolum; x < endcolum; x++)
+    for (int x = startcolum; x <= endcolum; x++)
     {
       Uint32 pixel = get_pixel(image, x, y);
       Uint8 r = 255, g = 0, b = 0;
