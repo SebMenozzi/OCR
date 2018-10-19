@@ -5,7 +5,7 @@ const int HEIGHT = 900;
 
 void OCR(char* file)
 {
-  SDL_Init(SDL_INIT_EVERYTHING);
+/*  SDL_Init(SDL_INIT_EVERYTHING);
   IMG_Init(IMG_INIT_PNG);
 
   int quit = 0;
@@ -41,5 +41,24 @@ void OCR(char* file)
   SDL_DestroyRenderer(render);
   SDL_DestroyWindow(window);
   IMG_Quit();
-  SDL_Quit();
+  SDL_Quit();*/
+
+        SDL_Surface* image_surface;
+        SDL_Surface* screen_surface;
+
+        init_sdl();
+
+        image_surface = load_image(file);
+	greyscale(image_surface);
+  	black_and_white(image_surface);
+  	parcours_horizontal(image_surface);
+
+        screen_surface = display_image(image_surface);
+
+        wait_for_keypressed();
+
+        SDL_FreeSurface(image_surface);
+        SDL_FreeSurface(screen_surface);
+
+
 }
