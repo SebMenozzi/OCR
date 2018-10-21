@@ -20,6 +20,7 @@ void black_and_white(SDL_Surface* image);
 Uint8* pixelref(SDL_Surface *surf, unsigned x, unsigned y);
 Uint32 get_pixel(SDL_Surface *surface, unsigned x, unsigned y);
 void put_pixel(SDL_Surface *surface, unsigned x, unsigned y, Uint32 pixel);
+//SDL_Surface* black_and_white2(SDL_Surface* img, int split);
 
 
 #endif
