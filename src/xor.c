@@ -115,12 +115,11 @@ void back_propagate() {
 
 void display_result() {
     printf(
-        "(%.0f, %.0f) : expected: %.0f => calculated: %f (error: %f)\n",
+        "(%.0f, %.0f) : expected: %.0f => calculated: %f\n",
         input_layer[0],
         input_layer[1],
         target,
-        output_layer,
-        error_rate
+        output_layer
     );
 }
 

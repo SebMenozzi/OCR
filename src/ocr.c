@@ -1,47 +1,64 @@
 #include "ocr.h"
-//#include "utils/sdl_functions.h"
 
-const int WIDTH  = 640;
-const int HEIGHT = 480;
+const int WIDTH  = 1300;
+const int HEIGHT = 900;
 
 void OCR(char* file)
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    IMG_Init(IMG_INIT_PNG);
+/*  SDL_Init(SDL_INIT_EVERYTHING);
+  IMG_Init(IMG_INIT_PNG);
 
-    SDL_Window* window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+  int quit = 0;
+  SDL_Event event;
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  SDL_Window* window = SDL_CreateWindow("MMGD", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0);
+  SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
 
-    SDL_Texture* texture = NULL;
-    SDL_Surface* image = IMG_Load(file);
-    texture = SDL_CreateTextureFromSurface(renderer, image);
+  SDL_Surface* image = load_image(file);
+  greyscale(image);
+  black_and_white(image);
+  parcours_horizontal(image);
 
-    SDL_FreeSurface(image);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 
-    SDL_Rect rect = { 0, 500, 100, 100 };
+  while(!quit){
+    SDL_Rect dstrect = { 0, 0, image->w, image->h};
 
-    SDL_Event input;
-    int quit = 0;
-
-    while (!quit)
-    {
-        while (SDL_PollEvent(&input) > 0)
-        {
-            if (input.type == SDL_QUIT) quit = 1;
-        }
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-
-        SDL_RenderCopy(renderer, texture, NULL, &rect);
-
-        SDL_RenderPresent(renderer);
+    SDL_PollEvent(&event);
+    switch (event.type){
+        case SDL_QUIT:
+            quit = 1;
+            break;
     }
 
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    IMG_Quit();
-    SDL_Quit();
+    SDL_RenderClear(render);
+    SDL_RenderCopy(render, texture, NULL, &dstrect);
+    SDL_RenderPresent(render);
+  }
+
+  SDL_DestroyTexture(texture);
+  SDL_FreeSurface(image);
+  SDL_DestroyRenderer(render);
+  SDL_DestroyWindow(window);
+  IMG_Quit();
+  SDL_Quit();*/
+
+        SDL_Surface* image_surface;
+        SDL_Surface* screen_surface;
+
+        init_sdl();
+
+        image_surface = load_image(file);
+	greyscale(image_surface);
+  	black_and_white(image_surface);
+  	parcours_horizontal(image_surface);
+
+        screen_surface = display_image(image_surface);
+
+        wait_for_keypressed();
+
+        SDL_FreeSurface(image_surface);
+        SDL_FreeSurface(screen_surface);
+
+
 }

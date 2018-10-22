@@ -1,7 +1,16 @@
-# OCR by MMGD team (EPITA SPE PROJECT - 2018)
+MMGD!
+===================
 
-This repository contains an ocr project done by:
-- **M**archeron Laure
-- **M**enozzi Sebastien
-- **G**oré Benjamin
-- **D**englos Gauthier
+EPITA S3 PROJECT
+
+* gauthier.denglos (DENGLOS Gauthier)
+* laure.marcheron (MARCHERON Laure)
+* sebastien.menozzi (MENOZZI Sebastien)
+* benjamin.gore (GORE Benjamin)
+
+Use our application:
+> - First open a terminal 
+> - Then go to the folder OCR
+> - type "make re" to compile
+> - then type ./mmgd --OCR path to test the segmentation and the greyscale
+> - Or type ./mmgd --XOR to test the XOR function 

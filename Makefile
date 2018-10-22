@@ -7,17 +7,19 @@ OS = $(shell uname)
 ifeq ($(OS), Darwin) # if os is macos
     LDFLAGS = -framework OpenGL -framework GLUT -F/Library/Frameworks -framework SDL2 -framework SDL2_image
     IFLAGS = -I/Library/Frameworks/SDL2.framework/Headers/ -I/Library/Frameworks/SDL2_image.framework/Headers/
+    SDL2FLAGS = ``
 else
-    LDFLAGS = -lGLU -lGL -lm -lSDL2 -lSDL2_image
+    LDFLAGS = -lSDL -lSDL_image -lm
+    SDL2FLAGS = `sdl-config --libs --cflags`
 endif
 NAME = mmgd
-SRC =	src/main.c src/xor.c src/ocr.c src/utils/sdl_functions.c
+SRC =	src/main.c src/xor.c src/ocr.c src/utils/sdl_functions.c src/utils/segmentation.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	gcc $(OBJ) $(CFLAGS) $(LDFLAGS) -o $@
+	gcc $(OBJ) $(CFLAGS) $(LDFLAGS) -o $@ $(SDL2FLAGS)
 
 %.o : %.c
 	gcc -c $^ $(CFLAGS) $(IFLAGS) -o $@
