@@ -23,45 +23,49 @@ SDL_Surface* load_image(char *path)
     return img;
 }
 
-SDL_Surface* display_image(SDL_Surface *img)
+void display_image(SDL_Surface *img)
 {
-    SDL_Surface *screen;
+  SDL_Window *window = SDL_CreateWindow("mmgd", 
+                                        SDL_WINDOWPOS_UNDEFINED, 
+                                        SDL_WINDOWPOS_UNDEFINED, 
+                                        img->w, img->h, 
+                                        0);
 
-    // Set the window to the same size as the image
-    screen = SDL_SetVideoMode(img->w, img->h, 0, SDL_SWSURFACE|SDL_ANYFORMAT);
-    if (screen == NULL)
-    {
-        // error management
-        errx(1, "Couldn't set %dx%d video mode: %s\n",
-                img->w, img->h, SDL_GetError());
-    }
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-    // Blit onto the screen surface
-    if(SDL_BlitSurface(img, NULL, screen, NULL) < 0)
-        warnx("BlitSurface error: %s\n", SDL_GetError());
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, img);
 
-    // Update the screen
-    SDL_UpdateRect(screen, 0, 0, img->w, img->h);
+  SDL_RenderCopy(renderer, texture, NULL, NULL);
+  SDL_RenderPresent(renderer);
 
-    // return the screen for further uses
-    return screen;
+  wait_for_keypressed();
+
+  SDL_DestroyTexture(texture);
+  SDL_FreeSurface(img);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
 }
 
 void wait_for_keypressed()
 {
-    SDL_Event event;
-
-    // Wait for a key to be down.
-    do
-    {
-        SDL_PollEvent(&event);
-    } while(event.type != SDL_KEYDOWN);
-
-    // Wait for a key to be up.
-    do
-    {
-        SDL_PollEvent(&event);
-    } while(event.type != SDL_KEYUP);
+  int quit = 0;
+  SDL_Event event;
+  
+  while(!quit) {
+    SDL_PollEvent(&event);
+    
+    switch (event.type) {
+      case SDL_QUIT:
+        quit = 1;
+        break;
+      
+      case SDL_KEYDOWN:
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
+          quit = 1;
+        }
+        break;
+    }
+  }
 }
 
 

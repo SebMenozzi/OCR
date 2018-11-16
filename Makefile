@@ -9,8 +9,8 @@ ifeq ($(OS), Darwin) # if os is macos
     IFLAGS = -I/Library/Frameworks/SDL2.framework/Headers/ -I/Library/Frameworks/SDL2_image.framework/Headers/
     SDL2FLAGS = ``
 else
-    LDFLAGS = -lSDL -lSDL_image -lm
-    SDL2FLAGS = `sdl-config --libs --cflags`
+    LDFLAGS = -lSDL2 -lSDL2_image -lm
+    SDL2FLAGS = `sdl2-config --libs --cflags`
 endif
 NAME = mmgd
 SRC =	src/main.c src/xor.c src/ocr.c src/utils/sdl_functions.c src/utils/segmentation.c

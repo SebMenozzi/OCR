@@ -7,9 +7,9 @@ void remplissage(SDL_Surface *image, int startline, int endline, int startcolum,
 //horizontal course of the image
 void parcours_horizontal(SDL_Surface *image)
 {
-	int oneblack = 0 ; // bool to know if we met a black pixel 
-	int startline = 0; // First line to be met 
-	int endline; //last line to be met 
+  int oneblack = 0 ; // bool to know if we met a black pixel 
+  int startline = 0; // First line to be met 
+  int endline; //last line to be met 
 
   for(int y = 0; y < image->h; y++)
   {
