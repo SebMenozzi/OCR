@@ -10,4 +10,6 @@
 
 void create_window(int argc, char **argv);
 void openfile(GtkButton *button, GtkLabel *text);
+void loadimg(GtkButton *button, GtkImage *img);
 void save_text(GtkButton *button, GtkTextBuffer *buffer);
+int ocr(GtkButton *button, GtkTextBuffer *buffer);
