@@ -5,8 +5,6 @@ const int HEIGHT = 900;
 
 void OCR(char* file)
 {
-
-  /* 
   SDL_Init(SDL_INIT_EVERYTHING);
   IMG_Init(IMG_INIT_PNG);
 
@@ -18,7 +16,8 @@ void OCR(char* file)
 
   SDL_Surface* image = load_image(file);
   greyscale(image);
-  black_and_white(image);
+  //black_and_white(image);
+  image = black_and_white2(image, 1);
   parcours_horizontal(image);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
@@ -28,9 +27,15 @@ void OCR(char* file)
 
     SDL_PollEvent(&event);
     switch (event.type){
-        case SDL_QUIT:
-            quit = 1;
-            break;
+      case SDL_QUIT:
+        quit = 1;
+        break;
+
+      case SDL_KEYDOWN:
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
+          quit = 1;
+        }
+        break;
     }
 
     SDL_RenderClear(render);
@@ -43,9 +48,12 @@ void OCR(char* file)
   SDL_DestroyRenderer(render);
   SDL_DestroyWindow(window);
   IMG_Quit();
-  SDL_Quit();*/
+  SDL_Quit();
 
+  /*
   SDL_Surface* image_surface;
+
+  IMG_Init(IMG_INIT_PNG);
 
   init_sdl();
 
@@ -55,4 +63,5 @@ void OCR(char* file)
   parcours_horizontal(image_surface);
 
   display_image(image_surface);
+  */
 }

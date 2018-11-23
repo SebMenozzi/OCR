@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "utils/sdl_functions.h"
+#include "utils/SDL/sdl_functions.h"
 #include "utils/segmentation.h"
 
 void OCR(char* file);
