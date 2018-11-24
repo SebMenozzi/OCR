@@ -38,25 +38,29 @@ int main(int argc, char *argv[])
       double target[] = { 1 };
 
       // nb_input, nb_hidden, nb_output, learning_rate, momentum
-      NeuralNetwork network = new_network(2, 3, 1, 0.5, 0.9);
-      printf("Input: \n");
-      print_matrix(network.input_layer);
-      printf("Hidden: \n");
-      print_matrix(network.hidden_layer);
-      printf("Output: \n");
-      print_matrix(network.output_layer);
-      printf("-------\n");
+      NeuralNetwork network = new_network(2, 3, 1, 0.5/*, 0.9*/);
 
-      forward_propagate(network, inputs);
-      back_propagate(network, target);
+      for (size_t i = 0; i < 100; ++i)
+      {
+        printf("Input: \n");
+        print_matrix(network.input_layer);
+        printf("Hidden: \n");
+        print_matrix(network.hidden_layer);
+        printf("Output: \n");
+        print_matrix(network.output_layer);
+        printf("-------\n");
 
-      printf("Input: \n");
-      print_matrix(network.input_layer);
-      printf("Hidden: \n");
-      print_matrix(network.hidden_layer);
-      printf("Output: \n");
-      print_matrix(network.output_layer);
-      printf("-------\n");
+        forward_propagate(network, inputs);
+        back_propagate(network, target);
+
+        printf("Input: \n");
+        print_matrix(network.input_layer);
+        printf("Hidden: \n");
+        print_matrix(network.hidden_layer);
+        printf("Output: \n");
+        print_matrix(network.output_layer);
+        printf("-------\n");
+      }
 
       free_network(network);
     }
