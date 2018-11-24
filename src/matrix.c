@@ -134,7 +134,7 @@ void print_matrix(Matrix* mat)
     {
       printf("%.2f ", mat->values[r * mat->cols + c]);
 
-      // last value in a column with a line break after
+      // last value in a column with after a line break
       if (c == mat->cols - 1) {
         printf("\n");
       }

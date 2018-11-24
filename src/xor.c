@@ -26,7 +26,7 @@ float error_rate; // for debug
 /* UTILS */
 
 double random_value() { // between -1 and 1
-    return 2.0f * rand() / RAND_MAX - 1;
+  return 2.0f * rand() / RAND_MAX - 1;
 }
 
 void random_input_weights() {

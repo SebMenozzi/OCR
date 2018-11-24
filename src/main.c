@@ -1,6 +1,7 @@
 #include "main.h"
 #include "mnist.h"
 #include "matrix.h"
+#include "neural_network.h"
 
 void help()
 {
@@ -17,10 +18,12 @@ int main(int argc, char *argv[])
     {
       help();
     }
+    /*
     else if(strcmp(argv[1], "--XOR") == 0)
     {
       XOR();
     }
+    */
     else if(strcmp(argv[1], "--OCR") == 0)
     {
       OCR(argv[2]);
@@ -29,21 +32,28 @@ int main(int argc, char *argv[])
     {
       test_matrix();
     }
-    else if (strcmp(argv[1], "--MNIST") == 0)
+    else if (strcmp(argv[1], "--NET") == 0)
     {
-      /*
-      // call to store mnist in array
-      load_mnist();
+      double inputs[] = { 0, 1 };
+      NeuralNetwork network = new_network(2, 3, 1, 0.5, 0.9);
+      printf("Input: \n");
+      print_matrix(network.input_layer);
+      print_matrix(network.input_weights);
+      print_matrix(network.input_bias);
+      printf("-------\n");
+      printf("Hidden: \n");
+      print_matrix(network.hidden_layer);
+      print_matrix(network.hidden_weights);
+      print_matrix(network.hidden_bias);
+      printf("-------\n");
 
-      // print pixels of first data in test dataset
-      for (int i = 0; i < 784; i++) {
-          //printf("%1.1f ", train_image[0][i]);
-          //if ((i+1) % 28 == 0) putchar('\n');
-      }
+      forward_propagate(network, inputs);
 
-      // print first label in test dataset
-      //printf("label: %d\n", train_label[0]);
-      */
+      print_matrix(network.input_layer);
+      print_matrix(network.hidden_layer);
+      print_matrix(network.output_layer);
+
+      free_network(network);
     }
   }
   else {

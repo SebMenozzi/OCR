@@ -70,19 +70,6 @@ void wait_for_keypressed()
   }
 }
 
-
-/*Uint32 get_pixel(SDL_Surface *surface, int x, int y)
-{
-    Uint32 *pixels = (Uint32 *)surface->pixels;
-    return pixels[ (y * surface->w ) + x];
-}
-
-void put_pixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
-{
-    Uint32 *pixels = (Uint32 *)surface->pixels;
-    pixels[( y * surface->w ) + x] = pixel;
-}*/
-
 Uint8* pixelref(SDL_Surface *surf, unsigned x, unsigned y) {
   int bpp = surf->format->BytesPerPixel;
   return (Uint8*)surf->pixels + y * surf->pitch + x * bpp;

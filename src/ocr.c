@@ -22,17 +22,20 @@ void OCR(char* file)
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 
-  while(!quit){
+  while(!quit)
+  {
     SDL_Rect dstrect = { 0, 0, image->w, image->h};
 
     SDL_PollEvent(&event);
-    switch (event.type){
+    switch (event.type)
+    {
       case SDL_QUIT:
         quit = 1;
         break;
 
       case SDL_KEYDOWN:
-        if (event.key.keysym.sym == SDLK_ESCAPE) {
+        if (event.key.keysym.sym == SDLK_ESCAPE)
+        {
           quit = 1;
         }
         break;

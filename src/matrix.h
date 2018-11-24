@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct _Matrix {
+typedef struct {
   size_t rows;
   size_t cols;
   double* values;
