@@ -237,6 +237,22 @@ void update_bias(NeuralNetwork net)
   }
 }
 
+void save_network(NeuralNetwork net)
+{
+  save_matrix(net.input_weights, "inputHidden.w");
+  save_matrix(net.hidden_weights, "hiddenOutput.w");
+  save_matrix(net.input_bias, "inputHidden.b");
+  save_matrix(net.hidden_bias, "hiddenOutput.b");
+}
+
+void load_network(NeuralNetwork net)
+{
+  load_matrix(net.input_weights, "inputHidden.w");
+  load_matrix(net.hidden_weights, "hiddenOutput.w");
+  load_matrix(net.input_bias, "inputHidden.b");
+  load_matrix(net.hidden_bias, "hiddenOutput.b");
+}
+
 void free_network(NeuralNetwork net)
 {
   free_matrix(net.input_layer);
@@ -251,4 +267,6 @@ void free_network(NeuralNetwork net)
 
   free_matrix(net.delta_hidden);
   free_matrix(net.delta_output);
+
+  free_matrix(net.target);
 }

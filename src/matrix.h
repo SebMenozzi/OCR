@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
   size_t rows;
@@ -18,6 +19,8 @@ Matrix* multiply_scalar(Matrix* mat, double scalar);
 Matrix* add_matrices(Matrix* mat1, Matrix* mat2);
 Matrix* multiply_matrices(Matrix* mat1, Matrix* mat2);
 void print_matrix(Matrix* mat);
+void save_matrix(Matrix* mat, char* name);
+void load_matrix(Matrix* mat, char* name);
 void free_matrix(Matrix* mat);
 void test_matrix();
 

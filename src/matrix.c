@@ -143,10 +143,41 @@ void print_matrix(Matrix* mat)
   printf("\n");
 }
 
-void free_matrix(Matrix* matrix)
+void save_matrix(Matrix* mat, char* name)
 {
-  //free(matrix->values);
-  free(matrix);
+  FILE* file = fopen(name, "w");
+  for(size_t r = 0; r < mat->rows; ++r)
+  {
+    for(size_t c = 0; c < mat->cols; ++c)
+    {
+      fprintf(file, "%f\n", mat->values[r * mat->cols + c]);
+    }
+  }
+  fclose(file);
+}
+
+void load_matrix(Matrix* mat, char* name)
+{
+  int sizeMax = 15;
+  char *line = calloc(15, sizeof(char));
+
+  FILE* file = fopen(name, "r");
+  for(size_t r = 0; r < mat->rows; ++r)
+  {
+    for(size_t c = 0; c < mat->cols; ++c)
+    {
+      fgets(line, sizeMax, file);
+      strtok(line, "\n");
+      mat->values[r * mat->cols + c] = atof(line);
+    }
+  }
+  fclose(file);
+}
+
+void free_matrix(Matrix* mat)
+{
+  free(mat->values);
+  free(mat);
 }
 
 /*
