@@ -4,6 +4,6 @@
 #include "matrix.h"
 #include "neural_network.h"
 
-void XOR(size_t epoch);
+void XOR(int epoch);
 
 #endif

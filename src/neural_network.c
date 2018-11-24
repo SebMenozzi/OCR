@@ -11,13 +11,13 @@ NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, d
   net.hidden_layer = new_matrix(nb_hidden, 1);
   net.output_layer = new_matrix(nb_output, 1);
 
-  net.input_weights = new_matrix(nb_input, nb_hidden);
-  //net.delta_input_weights = new_matrix(nb_input, nb_hidden);
-  net.input_bias = new_matrix(nb_hidden, 1);
+  net.input_hidden_weights = new_matrix(nb_input, nb_hidden);
+  //net.delta_input_hidden_weights = new_matrix(nb_input, nb_hidden);
+  net.input_hidden_bias = new_matrix(nb_hidden, 1);
 
-  net.hidden_weights = new_matrix(nb_hidden, nb_output);
+  net.hidden_output_weights = new_matrix(nb_hidden, nb_output);
   //net.delta_hidden_weights = new_matrix(nb_hidden, nb_output);
-  net.hidden_bias = new_matrix(nb_output, 1);
+  net.hidden_output_bias = new_matrix(nb_output, 1);
 
   net.target = new_matrix(nb_output, 1);
 
@@ -48,9 +48,9 @@ void randomize_weights_bias(NeuralNetwork net)
   {
     for (size_t r = 0; r < net.nb_input; ++r)
     {
-      net.input_weights->values[r * net.nb_hidden + c] = random_value();
+      net.input_hidden_weights->values[r * net.nb_hidden + c] = random_value();
     }
-    net.input_bias->values[c] = random_value();
+    net.input_hidden_bias->values[c] = random_value();
   }
 
   // initalize hidden weights and bias
@@ -58,9 +58,9 @@ void randomize_weights_bias(NeuralNetwork net)
   {
     for (size_t r = 0; r < net.nb_hidden; ++r)
     {
-      net.hidden_weights->values[r * net.nb_output + c] = random_value();
+      net.hidden_output_weights->values[r * net.nb_output + c] = random_value();
     }
-    net.hidden_bias->values[c] = random_value();
+    net.hidden_output_bias->values[c] = random_value();
   }
 }
 
@@ -89,12 +89,12 @@ void forward_propagate(NeuralNetwork net, double* inputs)
     sum = 0.0;
     for (size_t r = 0; r < net.nb_input; ++r)
     {
-      weight = net.input_weights->values[r * net.nb_hidden + c];
+      weight = net.input_hidden_weights->values[r * net.nb_hidden + c];
       layer = net.input_layer->values[r];
 
       sum += weight * layer;
     }
-    bias = net.input_bias->values[c];
+    bias = net.input_hidden_bias->values[c];
     net.hidden_layer->values[c] = sigmoid(sum + bias);
   }
 
@@ -104,12 +104,12 @@ void forward_propagate(NeuralNetwork net, double* inputs)
     sum = 0.0;
     for (size_t r = 0; r < net.nb_hidden; ++r)
     {
-      weight = net.hidden_weights->values[r * net.nb_output + c];
+      weight = net.hidden_output_weights->values[r * net.nb_output + c];
       layer = net.hidden_layer->values[r];
 
       sum += weight * layer;
     }
-    bias = net.hidden_bias->values[c];
+    bias = net.hidden_output_bias->values[c];
     net.output_layer->values[c] = sigmoid(sum + bias);
   }
 }
@@ -168,7 +168,7 @@ void calculate_deltas(NeuralNetwork net)
     sum = 0.0;
     for (size_t c = 0; c < net.nb_output; ++c)
     {
-      weight = net.hidden_weights->values[r * net.nb_output + c];
+      weight = net.hidden_output_weights->values[r * net.nb_output + c];
       delta = net.delta_output->values[c];
       sum += weight * delta;
     }
@@ -189,13 +189,13 @@ void update_weights(NeuralNetwork net)
     {
       delta = net.delta_hidden->values[c];
       layer = net.input_layer->values[r];
-      //dweight = net.delta_input_weights->values[r * net.nb_hidden + c];
+      //dweight = net.delta_input_hidden_weights->values[r * net.nb_hidden + c];
       gradient = delta * layer;
-      net.input_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate;
+      net.input_hidden_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate;
       /*
-      net.input_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate +
+      net.input_hidden_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate +
                                                           dweight * net.momentum;
-      net.delta_input_weights->values[r * net.nb_hidden + c] = gradient * net.learning_rate;
+      net.delta_input_hidden_weights->values[r * net.nb_hidden + c] = gradient * net.learning_rate;
       */
     }
   }
@@ -209,9 +209,9 @@ void update_weights(NeuralNetwork net)
       layer = net.hidden_layer->values[r];
       //dweight = net.delta_hidden_weights->values[r * net.nb_output + c];
       gradient = delta * layer;
-      net.hidden_weights->values[r * net.nb_output + c] += gradient * net.learning_rate;
+      net.hidden_output_weights->values[r * net.nb_output + c] += gradient * net.learning_rate;
       /*
-      net.hidden_weights->values[r * net.nb_output + c] += gradient * net.learning_rate +
+      net.hidden_output_weights->values[r * net.nb_output + c] += gradient * net.learning_rate +
                                                            dweight * net.momentum;
       net.delta_hidden_weights->values[r * net.nb_output + c] = gradient * net.learning_rate;
       */
@@ -223,35 +223,35 @@ void update_bias(NeuralNetwork net)
 {
   double delta;
 
-  // Update input_bias
+  // Update input_hidden_bias
   for (size_t r = 0; r < net.nb_hidden; ++r)
   {
     delta = net.delta_hidden->values[r];
-    net.input_bias->values[r] += delta * net.learning_rate;
+    net.input_hidden_bias->values[r] += delta * net.learning_rate;
   }
 
-  // Update hidden_bias
+  // Update hidden_output_bias
   for (size_t r = 0; r < net.nb_output; ++r)
   {
     delta = net.delta_output->values[r];
-    net.hidden_bias->values[r] += delta * net.learning_rate;
+    net.hidden_output_bias->values[r] += delta * net.learning_rate;
   }
 }
 
-void save_network(NeuralNetwork net)
+void save_network(NeuralNetwork net, char* directory)
 {
-  save_matrix(net.input_weights, "inputHidden.w");
-  save_matrix(net.hidden_weights, "hiddenOutput.w");
-  save_matrix(net.input_bias, "inputHidden.b");
-  save_matrix(net.hidden_bias, "hiddenOutput.b");
+  save_matrix(net.input_hidden_weights, directory, "inputHidden.w");
+  save_matrix(net.hidden_output_weights, directory, "hiddenOutput.w");
+  save_matrix(net.input_hidden_bias, directory, "inputHidden.b");
+  save_matrix(net.hidden_output_bias, directory, "hiddenOutput.b");
 }
 
-void load_network(NeuralNetwork net)
+void load_network(NeuralNetwork net, char* directory)
 {
-  load_matrix(net.input_weights, "inputHidden.w");
-  load_matrix(net.hidden_weights, "hiddenOutput.w");
-  load_matrix(net.input_bias, "inputHidden.b");
-  load_matrix(net.hidden_bias, "hiddenOutput.b");
+  load_matrix(net.input_hidden_weights, directory, "inputHidden.w");
+  load_matrix(net.hidden_output_weights, directory, "hiddenOutput.w");
+  load_matrix(net.input_hidden_bias, directory, "inputHidden.b");
+  load_matrix(net.hidden_output_bias, directory, "hiddenOutput.b");
 }
 
 void free_network(NeuralNetwork net)
@@ -260,11 +260,11 @@ void free_network(NeuralNetwork net)
   free_matrix(net.hidden_layer);
   free_matrix(net.output_layer);
 
-  free_matrix(net.input_weights);
-  free_matrix(net.input_bias);
+  free_matrix(net.input_hidden_weights);
+  free_matrix(net.input_hidden_bias);
 
-  free_matrix(net.hidden_weights);
-  free_matrix(net.hidden_bias);
+  free_matrix(net.hidden_output_weights);
+  free_matrix(net.hidden_output_bias);
 
   free_matrix(net.delta_hidden);
   free_matrix(net.delta_output);

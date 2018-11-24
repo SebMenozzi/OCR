@@ -17,11 +17,11 @@ typedef struct {
   Matrix* hidden_layer;
   Matrix* output_layer;
   //weights
-  Matrix* input_weights;
-  Matrix* hidden_weights;
+  Matrix* input_hidden_weights;
+  Matrix* hidden_output_weights;
   // bias
-  Matrix* input_bias;
-  Matrix* hidden_bias;
+  Matrix* input_hidden_bias;
+  Matrix* hidden_output_bias;
   // target
   Matrix* target;
   // deltas to update weights and biases
@@ -45,8 +45,8 @@ void print_error_rate(NeuralNetwork net);
 void calculate_deltas(NeuralNetwork net);
 void update_weights(NeuralNetwork net);
 void update_bias(NeuralNetwork net);
-void save_network(NeuralNetwork net);
-void load_network(NeuralNetwork net);
+void save_network(NeuralNetwork net, char* directory);
+void load_network(NeuralNetwork net, char* directory);
 void free_network(NeuralNetwork net);
 Matrix* get_network_result(NeuralNetwork net, double* inputs);
 

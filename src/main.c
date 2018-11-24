@@ -3,13 +3,13 @@
 void help()
 {
   printf("HELP : \n");
-  printf("  --XOR  This function will start the XOR neural network (proof of concept)\n");
-  printf("  --OCR \"path\" This function will start the OCR neural network\n");
+  printf("  --XOR number : This function will start the XOR neural network (proof of concept)\n");
+  printf("  --OCR \"path\" : This function will start the OCR neural network\n");
 }
 
 int main(int argc, char *argv[])
 {
-  if(argc > 1)
+  if(argc >= 2)
   {
     if(strcmp(argv[1], "--help") == 0)
     {
@@ -17,12 +17,22 @@ int main(int argc, char *argv[])
     }
     else if(strcmp(argv[1], "--XOR") == 0)
     {
-      size_t epoch = strtol(argv[2], NULL, 10); // convert to string to size_t
-      XOR(epoch);
+      if (argc == 3)
+      {
+        int epoch = strtol(argv[2], NULL, 10); // convert string to int
+        XOR(epoch);
+      }
+      else
+      {
+        XOR(-1);
+      }
     }
     else if(strcmp(argv[1], "--OCR") == 0)
     {
-      OCR(argv[2]);
+      if (argc == 3)
+      {
+        OCR(argv[2]);
+      }
     }
     else if(strcmp(argv[1], "--MATRIX") == 0)
     {

@@ -25,7 +25,7 @@ void print_xor_result(NeuralNetwork network)
   printf("+-------------------+\n");
 }
 
-void XOR(size_t epoch)
+void XOR(int epoch)
 {
   double inputs[2];
   double target[1];
@@ -33,22 +33,29 @@ void XOR(size_t epoch)
   // nb_input, nb_hidden, nb_output, learning_rate
   NeuralNetwork network = new_network(2, 10, 1, 0.5);
 
-  // train the network x times
-  for (size_t i = 0; i < epoch; i++)
-  {
-    // for each training data
-    for (size_t j = 0; j < 4; j++)
+  if (epoch > 0) {
+    // train the network x times
+    for (int i = 0; i < epoch; ++i)
     {
-      inputs[0] = training_data[j][0];
-      inputs[1] = training_data[j][1];
-      forward_propagate(network, inputs);
+      // for each training data
+      for (size_t j = 0; j < 4; ++j)
+      {
+        inputs[0] = training_data[j][0];
+        inputs[1] = training_data[j][1];
+        forward_propagate(network, inputs);
 
-      target[0] = anwser_data[j];
-      back_propagate(network, target);
+        target[0] = anwser_data[j];
+        back_propagate(network, target);
+      }
     }
   }
+  else {
+    // load the network from memory
+    load_network(network, "data/xor");
+  }
+
   print_xor_result(network);
 
-  save_network(network);
+  save_network(network, "data/xor");
   free_network(network);
 }
