@@ -1,14 +1,9 @@
 #ifndef XOR_H_
 #define XOR_H_
 
-#define nb_hidden_layer 10
-#define epoch 10000
-#define learning_rate 0.7
+#include "matrix.h"
+#include "neural_network.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
-void XOR();
+void XOR(size_t epoch);
 
 #endif

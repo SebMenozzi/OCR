@@ -176,7 +176,7 @@ void load_matrix(Matrix* mat, char* name)
 
 void free_matrix(Matrix* mat)
 {
-  free(mat->values);
+  //free(mat->values);
   free(mat);
 }
 

@@ -24,6 +24,7 @@ NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, d
   net.delta_output = new_matrix(nb_output, 1);
   net.delta_hidden = new_matrix(nb_hidden, 1);
 
+  // error rate initialized to 0
   net.mae_rate = 0;
   net.rmse_rate = 0;
 
@@ -118,7 +119,7 @@ void back_propagate(NeuralNetwork net, double* target)
   // we put the target
   net.target->values = target;
 
-  print_error_rate(net); // for debugging
+  //print_error_rate(net); // for debugging
   calculate_deltas(net);
   update_weights(net);
   update_bias(net);
@@ -269,4 +270,10 @@ void free_network(NeuralNetwork net)
   free_matrix(net.delta_output);
 
   free_matrix(net.target);
+}
+
+Matrix* get_network_result(NeuralNetwork net, double* inputs)
+{
+  forward_propagate(net, inputs);
+  return net.output_layer;
 }

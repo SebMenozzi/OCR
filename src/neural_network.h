@@ -48,5 +48,6 @@ void update_bias(NeuralNetwork net);
 void save_network(NeuralNetwork net);
 void load_network(NeuralNetwork net);
 void free_network(NeuralNetwork net);
+Matrix* get_network_result(NeuralNetwork net, double* inputs);
 
 #endif
