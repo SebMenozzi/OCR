@@ -35,7 +35,7 @@ void back_propagate(NeuralNetwork net, double* target);
 void print_error_rate(NeuralNetwork net);
 void calculate_cost_function(NeuralNetwork net);
 void update_weights(NeuralNetwork net);
-//void update_bias(NeuralNetwork net);
+void update_bias(NeuralNetwork net);
 void free_network(NeuralNetwork network);
 
 #endif

@@ -34,24 +34,29 @@ int main(int argc, char *argv[])
     }
     else if (strcmp(argv[1], "--NET") == 0)
     {
-      double inputs[] = { 0, 1 };
+      double inputs[] = { 1, 0 };
+      double target[] = { 1 };
+
+      // nb_input, nb_hidden, nb_output, learning_rate, momentum
       NeuralNetwork network = new_network(2, 3, 1, 0.5, 0.9);
       printf("Input: \n");
       print_matrix(network.input_layer);
-      print_matrix(network.input_weights);
-      print_matrix(network.input_bias);
-      printf("-------\n");
       printf("Hidden: \n");
       print_matrix(network.hidden_layer);
-      print_matrix(network.hidden_weights);
-      print_matrix(network.hidden_bias);
+      printf("Output: \n");
+      print_matrix(network.output_layer);
       printf("-------\n");
 
       forward_propagate(network, inputs);
+      back_propagate(network, target);
 
+      printf("Input: \n");
       print_matrix(network.input_layer);
+      printf("Hidden: \n");
       print_matrix(network.hidden_layer);
+      printf("Output: \n");
       print_matrix(network.output_layer);
+      printf("-------\n");
 
       free_network(network);
     }

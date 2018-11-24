@@ -121,7 +121,7 @@ void back_propagate(NeuralNetwork net, double* target)
   print_error_rate(net); // for debugging
   calculate_cost_function(net);
   update_weights(net);
-  //update_bias(net);
+  update_bias(net);
 }
 
 void print_error_rate(NeuralNetwork net)
@@ -212,12 +212,29 @@ void update_weights(NeuralNetwork net)
     }
   }
 }
-/*
+
 void update_bias(NeuralNetwork net)
 {
+  double error, delta;
 
+  // Update input_bias
+  for (size_t r = 0; r < net.nb_hidden; ++r)
+  {
+    error = net.hidden_cost_error->values[r];
+    delta = error * net.learning_rate;
+    net.input_bias->values[r] += delta;
+  }
+
+  // Update hidden_bias
+  for (size_t r = 0; r < net.nb_output; ++r)
+  {
+    error = net.output_cost_error->values[r];
+    delta = error * net.learning_rate;
+
+    net.hidden_bias->values[r] += delta;
+  }
 }
-*/
+
 void free_network(NeuralNetwork net)
 {
   free_matrix(net.input_layer);
