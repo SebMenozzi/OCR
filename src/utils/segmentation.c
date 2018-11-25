@@ -7,10 +7,10 @@ void horizontal_course(SDL_Surface *image)
   int startline = 0; // First line to be met
   int endline; // Last line to be met
 
-  for(int y = 0; y < image->h; y++)
+  for(int y = 0; y < image->h; ++y)
   {
     int oneblank = 1;
-    for(int x = 0; x < image->w; x++)
+    for(int x = 0; x < image->w; ++x)
     {
       Uint32 pixel = get_pixel(image, x, y);
       Uint8 r = 0, g = 0, b = 0;
@@ -42,10 +42,10 @@ void vertical_course(SDL_Surface *image, int startline, int endline)
   int oneblack = 0;
   int startcolum = 0; // first colum to be met
   int endcolum; // last line to be met
-  for(int x = 0; x < image->w; x++)
+  for(int x = 0; x < image->w; ++x)
   {
     int oneblank = 1;
-    for( int y = startline; y <= endline; y++)
+    for( int y = startline; y <= endline; ++y)
     {
       Uint32 pixel = get_pixel(image, x, y);
       Uint8 r = 0, g = 0, b = 0;
@@ -76,7 +76,7 @@ void surround(SDL_Surface *image, int startline, int endline, int startcolum, in
   Uint8 r = 255, g = 0, b = 0;
   Uint32 pixel = SDL_MapRGB(image->format, r, g, b);
 
-  for (int y = startline; y <= endline; y++)
+  for (int y = startline; y <= endline; ++y)
   {
     // left border
     put_pixel(image, startcolum - 1, y, pixel);
@@ -85,7 +85,7 @@ void surround(SDL_Surface *image, int startline, int endline, int startcolum, in
     put_pixel(image, endcolum + 1, y, pixel);
   }
 
-  for (int x = startcolum; x <= endcolum; x++)
+  for (int x = startcolum; x <= endcolum; ++x)
   {
     // top border
     put_pixel(image, x, startline, pixel);
@@ -110,7 +110,7 @@ void extract_characters(SDL_Surface *image, int startline, int endline, int star
       Uint32 pixel = get_pixel(image, startcolum + x, startline + y + 1);
       Uint8 r = 0, g = 0, b = 0;
       SDL_GetRGB(pixel, image->format, &r, &g, &b);
-      
+
       mat->values[y * width + x] = (double) 1.0 - (r / 255);
     }
   }
