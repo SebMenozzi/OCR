@@ -30,8 +30,8 @@ void XOR(int epoch)
   double inputs[2];
   double target[1];
 
-  // nb_input, nb_hidden, nb_output, learning_rate
-  NeuralNetwork network = new_network(2, 10, 1, 0.5);
+  // nb_input, nb_hidden, nb_output
+  NeuralNetwork network = new_network(2, 10, 1);
 
   if (epoch > 0) {
     // train the network x times
@@ -45,7 +45,7 @@ void XOR(int epoch)
         forward_propagate(network, inputs);
 
         target[0] = anwser_data[j];
-        back_propagate(network, target);
+        back_propagate(network, target, 0.5, 0.9); // network, target, learning_rate, momentum
       }
     }
   }

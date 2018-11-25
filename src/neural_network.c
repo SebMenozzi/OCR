@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, double learning_rate/*, double momentum*/)
+NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output)
 {
   NeuralNetwork net;
   net.nb_input = nb_input;
@@ -12,24 +12,22 @@ NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, d
   net.output_layer = new_matrix(nb_output, 1);
 
   net.input_hidden_weights = new_matrix(nb_input, nb_hidden);
-  //net.delta_input_hidden_weights = new_matrix(nb_input, nb_hidden);
   net.input_hidden_bias = new_matrix(nb_hidden, 1);
 
   net.hidden_output_weights = new_matrix(nb_hidden, nb_output);
-  //net.delta_hidden_weights = new_matrix(nb_hidden, nb_output);
   net.hidden_output_bias = new_matrix(nb_output, 1);
 
   net.target = new_matrix(nb_output, 1);
 
-  net.delta_output = new_matrix(nb_output, 1);
-  net.delta_hidden = new_matrix(nb_hidden, 1);
+  net.delta_hidden_output = new_matrix(nb_output, 1);
+  net.delta_input_hidden = new_matrix(nb_hidden, 1);
+
+  net.delta_input_hidden_weights = new_matrix(net.nb_input, net.nb_hidden);
+  net.delta_hidden_output_weights = new_matrix(net.nb_hidden, net.nb_output);
 
   // error rate initialized to 0
   net.mae_rate = 0;
   net.rmse_rate = 0;
-
-  net.learning_rate = learning_rate;
-  //net.momentum = momentum;
 
   // put random weights and bias in the net
   randomize_weights_bias(net);
@@ -98,12 +96,22 @@ void forward_propagate(NeuralNetwork net, double* inputs)
   }
 }
 
-void back_propagate(NeuralNetwork net, double* target)
-{
-  // we put the target
-  net.target->values = target;
+/*
+  learning_rate: overall net learning rate
+  - 0.0 slow learner
+  - 0.2 medium learner
+  - 1.0 reckless learner
 
-  //print_error_rate(net); // for debugging
+  momentum: improves training speed and accuracy
+  - 0.0 no momentum
+  - 0.5 moderate momentum
+*/
+void back_propagate(NeuralNetwork net, double* target, double learning_rate, double momentum)
+{
+  net.target->values = target;
+  net.learning_rate = learning_rate;
+  net.momentum = momentum;
+
   calculate_deltas(net);
   update_weights(net);
   update_bias(net);
@@ -142,7 +150,7 @@ void calculate_deltas(NeuralNetwork net)
     output = net.output_layer->values[r];
     derivate = sigmoid_prime(output);
     target = net.target->values[r];
-    net.delta_output->values[r] = (target - output) * derivate;
+    net.delta_hidden_output->values[r] = (target - output) * derivate;
   }
 
   // Calculate cost function for hidden neurons
@@ -153,34 +161,35 @@ void calculate_deltas(NeuralNetwork net)
     for (size_t c = 0; c < net.nb_output; ++c)
     {
       weight = net.hidden_output_weights->values[r * net.nb_output + c];
-      delta = net.delta_output->values[c];
+      delta = net.delta_hidden_output->values[c];
       sum += weight * delta;
     }
     layer = net.hidden_layer->values[r];
     derivate = sigmoid_prime(layer);
-    net.delta_hidden->values[r] = sum * derivate;
+    net.delta_input_hidden->values[r] = sum * derivate;
   }
 }
 
+// https://visualstudiomagazine.com/articles/2017/08/01/neural-network-momentum.aspx
 void update_weights(NeuralNetwork net)
 {
-  double gradient, /*dweight,*/ delta, layer;
+  double gradient, delta, layer, dweight, w1, w2;
 
   // Weights between input and hidden layers
   for (size_t c = 0; c < net.nb_hidden; ++c)
   {
     for(size_t r = 0; r < net.nb_input; ++r)
     {
-      delta = net.delta_hidden->values[c];
+      delta = net.delta_input_hidden->values[c];
       layer = net.input_layer->values[r];
-      //dweight = net.delta_input_hidden_weights->values[r * net.nb_hidden + c];
       gradient = delta * layer;
-      net.input_hidden_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate;
-      /*
-      net.input_hidden_weights->values[r * net.nb_hidden + c] += gradient * net.learning_rate +
-                                                          dweight * net.momentum;
-      net.delta_input_hidden_weights->values[r * net.nb_hidden + c] = gradient * net.learning_rate;
-      */
+
+      dweight = net.delta_input_hidden_weights->values[r * net.nb_hidden + c];
+      w1 = gradient * net.learning_rate;
+      w2 = dweight * net.momentum;
+      // new input to hidden weight
+      net.input_hidden_weights->values[r * net.nb_hidden + c] += w1 + w2;
+      net.delta_input_hidden_weights->values[r * net.nb_hidden + c] = w1;
     }
   }
 
@@ -189,16 +198,16 @@ void update_weights(NeuralNetwork net)
   {
     for(size_t r = 0; r < net.nb_hidden; ++r)
     {
-      delta = net.delta_output->values[c];
+      delta = net.delta_hidden_output->values[c];
       layer = net.hidden_layer->values[r];
-      //dweight = net.delta_hidden_weights->values[r * net.nb_output + c];
       gradient = delta * layer;
-      net.hidden_output_weights->values[r * net.nb_output + c] += gradient * net.learning_rate;
-      /*
-      net.hidden_output_weights->values[r * net.nb_output + c] += gradient * net.learning_rate +
-                                                           dweight * net.momentum;
-      net.delta_hidden_weights->values[r * net.nb_output + c] = gradient * net.learning_rate;
-      */
+
+      dweight = net.delta_hidden_output_weights->values[r * net.nb_output + c];
+      w1 = gradient * net.learning_rate;
+      w2 = dweight * net.momentum;
+      // new hidden to output weight
+      net.hidden_output_weights->values[r * net.nb_output + c] += w1 + w2;
+      net.delta_hidden_output_weights->values[r * net.nb_output + c] = w1;
     }
   }
 }
@@ -210,14 +219,14 @@ void update_bias(NeuralNetwork net)
   // Update input_hidden_bias
   for (size_t r = 0; r < net.nb_hidden; ++r)
   {
-    delta = net.delta_hidden->values[r];
+    delta = net.delta_input_hidden->values[r];
     net.input_hidden_bias->values[r] += delta * net.learning_rate;
   }
 
   // Update hidden_output_bias
   for (size_t r = 0; r < net.nb_output; ++r)
   {
-    delta = net.delta_output->values[r];
+    delta = net.delta_hidden_output->values[r];
     net.hidden_output_bias->values[r] += delta * net.learning_rate;
   }
 }
@@ -250,10 +259,13 @@ void free_network(NeuralNetwork net)
   free_matrix(net.hidden_output_weights);
   free_matrix(net.hidden_output_bias);
 
-  free_matrix(net.delta_hidden);
-  free_matrix(net.delta_output);
+  free_matrix(net.delta_input_hidden);
+  free_matrix(net.delta_hidden_output);
 
   free_matrix(net.target);
+
+  free_matrix(net.delta_input_hidden_weights);
+  free_matrix(net.delta_hidden_output_weights);
 }
 
 Matrix* get_network_result(NeuralNetwork net, double* inputs)

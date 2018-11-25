@@ -26,22 +26,23 @@ typedef struct {
   // target
   Matrix* target;
   // deltas to update weights and biases
-  Matrix* delta_hidden;
-  Matrix* delta_output;
-  //Matrix* delta_input_weights;
-  //Matrix* delta_hidden_weights;
+  Matrix* delta_input_hidden;
+  Matrix* delta_hidden_output;
+  // when we use the momentum factor
+  Matrix* delta_input_hidden_weights;
+  Matrix* delta_hidden_output_weights;
   // error rate
   double mae_rate;
   double rmse_rate;
   // parameters
   double learning_rate;
-  //double momentum;
+  double momentum;
 } NeuralNetwork;
 
-NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, double learning_rate/*, double momentum*/);
+NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output);
 void randomize_weights_bias(NeuralNetwork net);
 void forward_propagate(NeuralNetwork net, double* inputs);
-void back_propagate(NeuralNetwork net, double* target);
+void back_propagate(NeuralNetwork net, double* target, double learning_rate, double momentum);
 void print_error_rate(NeuralNetwork net);
 void calculate_deltas(NeuralNetwork net);
 void update_weights(NeuralNetwork net);
