@@ -6,6 +6,7 @@
 #include <math.h>
 #include <string.h>
 #include "matrix.h"
+#include "utils/tools.h"
 
 typedef struct {
   // topology

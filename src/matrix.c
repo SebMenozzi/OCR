@@ -145,11 +145,7 @@ void print_matrix(Matrix* mat)
 
 void save_matrix(Matrix* mat, char* directory, char* name)
 {
-  char* fullpath;
-  fullpath = malloc(strlen(directory) + strlen("/") + strlen(name) + 1);
-  strcpy(fullpath, directory); // copy directory in fullpath
-  strcat(fullpath, "/"); // add "/"
-  strcat(fullpath, name); // add the name
+  char* fullpath = create_path(directory, name);
 
   FILE* file = fopen(fullpath, "w");
   for(size_t r = 0; r < mat->rows; ++r)
@@ -164,12 +160,7 @@ void save_matrix(Matrix* mat, char* directory, char* name)
 
 void load_matrix(Matrix* mat, char* directory, char* name)
 {
-  // TODO: AVOID CODE REPETITION
-  char* fullpath;
-  fullpath = malloc(strlen(directory) + strlen("/") + strlen(name) + 1);
-  strcpy(fullpath, directory); // copy directory in fullpath
-  strcat(fullpath, "/"); // add "/"
-  strcat(fullpath, name); // add the name
+  char* fullpath = create_path(directory, name);
 
   int sizeMax = 15;
   char *line = calloc(15, sizeof(char));

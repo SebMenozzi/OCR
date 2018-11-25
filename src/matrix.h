@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "utils/tools.h"
 
 typedef struct {
   size_t rows;

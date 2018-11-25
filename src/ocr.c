@@ -18,7 +18,7 @@ void OCR(char* file)
   greyscale(image);
   black_and_white(image);
   //image = black_and_white2(image, 1);
-  parcours_horizontal(image);
+  horizontal_course(image);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(render, image);
 

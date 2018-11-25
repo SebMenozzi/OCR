@@ -37,10 +37,6 @@ NeuralNetwork new_network(size_t nb_input, size_t nb_hidden, size_t nb_output, d
   return net;
 }
 
-double random_value() { // between -1 and 1
-  return 2.0f * rand() / RAND_MAX - 1;
-}
-
 void randomize_weights_bias(NeuralNetwork net)
 {
   // initalize input weights and bias
@@ -62,18 +58,6 @@ void randomize_weights_bias(NeuralNetwork net)
     }
     net.hidden_output_bias->values[c] = random_value();
   }
-}
-
-// activation function
-float sigmoid(float x)
-{
-  return 1.0 / (1.0 + exp(-x));
-}
-
-// derivative of activation function
-float sigmoid_prime(float x)
-{
-  return x * (1.0 - x);
 }
 
 void forward_propagate(NeuralNetwork net, double* inputs)
