@@ -24,3 +24,20 @@ float sigmoid_prime(float x) // derivative of sigmoid function
 {
   return x * (1.0 - x);
 }
+
+int create_folder(char* path)
+{
+  int error = 0;
+  #if defined(_WIN32)
+    error = _mkdir(path);
+  #else
+    error= mkdir(path, 0733);
+  #endif
+  return error;
+}
+
+int folder_exists(char* path)
+{
+  struct stat st;
+  return stat(path, &st);
+}

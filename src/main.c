@@ -1,14 +1,23 @@
-#include "main.h"
+#include "xor.h"
+#include "ocr.h"
+#include "ocr_ui.h"
+#include "utils/matrix.h"
+#include "train_ocr.h"
+#include "generate_training_data.h"
 
 void help()
 {
   printf("HELP : \n");
   printf("  --XOR number : This function will start the XOR neural network (proof of concept)\n");
   printf("  --OCR \"path\" : This function will start the OCR neural network\n");
+  printf("  --OCR_UI \"path\" : This function will start the OCR neural network with an UI\n");
+  printf("  --GTD \"path_of_fonts\" : This function will generate a training data from a fonts directory\n");
+  printf("  --TRAIN_OCR number : This function will train the OCR neural network with current the generated training data\n");
 }
 
 int main(int argc, char *argv[])
 {
+  // TODO: REFACTORING DIRTY CODE WITH TOO MANY REPETITIONS
   if(argc >= 2)
   {
     if(strcmp(argv[1], "--help") == 0)
@@ -34,17 +43,43 @@ int main(int argc, char *argv[])
         OCR(argv[2]);
       }
     }
+    else if(strcmp(argv[1], "--OCR_UI") == 0)
+    {
+      if (argc == 3)
+      {
+        OCR_UI(argv[2]);
+      }
+    }
     else if(strcmp(argv[1], "--MATRIX") == 0)
     {
       test_matrix();
     }
+    else if(strcmp(argv[1], "--TRAIN_OCR") == 0)
+    {
+      if (argc == 3)
+      {
+        int epoch = strtol(argv[2], NULL, 10); // convert string to int
+        TRAIN_OCR(epoch);
+      }
+      else
+      {
+        TRAIN_OCR(-1);
+      }
+    }
+    else if(strcmp(argv[1], "--GTD") == 0)
+    {
+      if (argc == 3)
+      {
+        GENERATE_TRAINING_DATA(argv[2]);
+      }
+    }
   }
   else
   {
-    printf("#-----------#\n");
+    printf("+-----------+\n");
     printf("| MMGD TEAM |\n");
-    printf("#-----------#\n\n");
-    printf("BY\n");
+    printf("+-----------+\n\n");
+    printf("By\n");
     printf("- Marcheron Laure\n");
     printf("- Menozzi Sebastien\n");
     printf("- Goré Benjamin\n");

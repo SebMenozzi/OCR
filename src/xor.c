@@ -1,7 +1,8 @@
 #include "xor.h"
 
 // training data
-double training_data[4][2] = {
+double training_data[4][2] =
+{
   { 0, 0 },
   { 0, 1 },
   { 1, 0 },
@@ -33,7 +34,8 @@ void XOR(int epoch)
   // nb_input, nb_hidden, nb_output
   NeuralNetwork network = new_network(2, 10, 1);
 
-  if (epoch > 0) {
+  if (epoch > 0)
+  {
     // train the network x times
     for (int i = 0; i < epoch; ++i)
     {
@@ -46,10 +48,13 @@ void XOR(int epoch)
 
         target[0] = anwser_data[j];
         back_propagate(network, target, 0.5, 0.9); // network, target, learning_rate, momentum
+
+        print_error_rate(network);
       }
     }
   }
-  else {
+  else
+  {
     // load the network from memory
     load_network(network, "data/xor");
   }

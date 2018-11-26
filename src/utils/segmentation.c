@@ -1,7 +1,7 @@
 #include "segmentation.h"
 
 // Horizontal course of the image
-void horizontal_course(SDL_Surface *image)
+void horizontal_course(SDL_Surface* image)
 {
   int oneblack = 0 ; // Boolean to know if we met a black pixel
   int startline = 0; // First line to be met
@@ -37,7 +37,7 @@ void horizontal_course(SDL_Surface *image)
 }
 
 // vertical course of the image
-void vertical_course(SDL_Surface *image, int startline, int endline)
+void vertical_course(SDL_Surface* image, int startline, int endline)
 {
   int oneblack = 0;
   int startcolum = 0; // first colum to be met
@@ -71,7 +71,7 @@ void vertical_course(SDL_Surface *image, int startline, int endline)
   }
 }
 
-void surround(SDL_Surface *image, int startline, int endline, int startcolum, int endcolum)
+void surround(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum)
 {
   Uint8 r = 255, g = 0, b = 0;
   Uint32 pixel = SDL_MapRGB(image->format, r, g, b);
@@ -96,7 +96,7 @@ void surround(SDL_Surface *image, int startline, int endline, int startcolum, in
 }
 
 
-void extract_characters(SDL_Surface *image, int startline, int endline, int startcolum, int endcolum)
+void extract_characters(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum)
 {
   size_t height = endline - startline,
          width = endcolum - startcolum + 1;
@@ -107,18 +107,19 @@ void extract_characters(SDL_Surface *image, int startline, int endline, int star
   {
     for (size_t x = 0; x < width; ++x)
     {
-      Uint32 pixel = get_pixel(image, startcolum + x, startline + y + 1);
-      Uint8 r = 0, g = 0, b = 0;
-      SDL_GetRGB(pixel, image->format, &r, &g, &b);
-
-      mat->values[y * width + x] = (double) 1.0 - (r / 255);
+      mat->values[y * width + x] = get_value_pixel(image, startcolum + x, startline + y + 1);
     }
   }
 
   char* name = malloc(10 * sizeof(char));
   sprintf(name, "%d_%d.m", startline, startcolum);
 
-  save_matrix(mat, "data/raw_characters", name);
+  Matrix* mat_28x28 = resize_matrix(mat, 28, 28);
 
+  //print_matrix(matrix_28x28);
+  
+  save_matrix(mat_28x28, "data/raw_characters", name);
+
+  free_matrix(mat_28x28);
   free_matrix(mat);
 }
