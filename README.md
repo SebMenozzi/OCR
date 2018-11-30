@@ -1,7 +1,9 @@
 MMGD!
 ===================
 
-EPITA S3 PROJECT
+EPITA S3 SPE PROJECT
+
+~ Period: between september to november 2018 ~
 
 * gauthier.denglos (DENGLOS Gauthier)
 * laure.marcheron (MARCHERON Laure)
