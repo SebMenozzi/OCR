@@ -9,9 +9,14 @@
 #include "matrix.h"
 #include "tools.h"
 
-void horizontal_course(SDL_Surface* image);
-void vertical_course(SDL_Surface* image, int startline, int endline);
-void surround(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum);
-void extract_characters(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum);
+void horizontal_course(SDL_Surface* image,
+                       void (*fun)(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter)
+                      );
+int vertical_course(SDL_Surface* image,
+                    size_t offset,
+                    int startline,
+                    int endline,
+                    void (*fun)(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter)
+                   );
 
 #endif

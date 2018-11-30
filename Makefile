@@ -1,7 +1,7 @@
 .PHONY : clean, fclean, re
 .SUFFIXES :
 
-CFLAGS = -Wall -Werror -Wextra -std=c99
+CFLAGS = -Wall -Werror -Wextra -std=c99 -g
 
 OS = $(shell uname)
 ifeq ($(OS), Darwin) # if os is macos
@@ -13,7 +13,7 @@ else
     LINKEROPTIONS = `sdl2-config --libs --cflags`
 endif
 NAME = mmgd
-SRC =	src/main.c src/ocr.c src/ocr_ui.c src/xor.c src/train_ocr.c src/generate_training_data.c src/utils/matrix.c src/utils/neural_network.c src/utils/sdl_functions.c src/utils/image_operations.c src/utils/segmentation.c src/utils/tools.c
+SRC =	src/main.c src/ocr.c src/ocr_ui.c src/xor.c src/train_ocr.c src/gtd.c src/gtd_from_seg.c src/utils/matrix.c src/utils/neural_network.c src/utils/sdl_functions.c src/utils/image_operations.c src/utils/segmentation.c src/utils/tools.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)

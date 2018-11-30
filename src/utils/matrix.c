@@ -3,10 +3,12 @@
 
 Matrix* new_matrix(size_t rows, size_t cols)
 {
-  Matrix* mat = calloc(rows * cols, sizeof(Matrix) + sizeof(double));
+  //Matrix* mat = calloc(rows * cols, sizeof(Matrix) + sizeof(double));
+  Matrix* mat = malloc(sizeof(Matrix));
   mat->rows = rows;
   mat->cols = cols;
-  mat->values = (double*)(mat + 1);
+  //mat->values = (double*)(mat + 1);
+  mat->values = calloc(rows * cols, sizeof(double));
   return mat;
 }
 
@@ -159,7 +161,21 @@ Matrix* resize_matrix(Matrix* mat, size_t width, size_t height)
   return new_mat;
 }
 
-void print_matrix(Matrix* mat)
+Matrix* square_matrix_to_column(Matrix* mat)
+{
+  Matrix* new_mat = new_matrix(mat->cols * mat->rows, 1);
+
+  for (size_t r = 0; r < mat->rows; ++r)
+  {
+    for (size_t c = 0; c < mat->cols; ++c) {
+      new_mat->values[r * mat->cols + c] = mat->values[r * mat->cols + c];
+    }
+  }
+
+  return new_mat;
+}
+
+void print_matrix_double(Matrix* mat)
 {
   double *p = mat->values;
   for (size_t r = 0; r < mat->rows; ++r, putchar('\n'))
@@ -170,6 +186,21 @@ void print_matrix(Matrix* mat)
   putchar('\n');
 }
 
+// repetitons...
+void print_matrix(Matrix* mat)
+{
+  double *p = mat->values;
+  for (size_t r = 0; r < mat->rows; ++r, putchar('\n'))
+  {
+    for (size_t c = 0; c < mat->cols; ++c) {
+      if ((int) *p++ == 0)
+        printf(" ");
+      else
+        printf("1");
+    }
+  }
+  putchar('\n');
+}
 
 void save_matrix(Matrix* mat, char* directory, char* name)
 {

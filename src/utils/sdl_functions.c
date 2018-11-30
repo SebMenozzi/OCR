@@ -4,12 +4,12 @@ void SDL_FreeSurface(SDL_Surface *surface);
 
 void init_sdl()
 {
-    // Init only the video part.
-    // If it fails, die with an error message.
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-      errx(1,"Could not initialize SDL: %s.\n", SDL_GetError());
+  // Init only the video part.
+  // If it fails, die with an error message.
+  if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    errx(1,"Could not initialize SDL: %s.\n", SDL_GetError());
 
-     IMG_Init(IMG_INIT_PNG);
+   IMG_Init(IMG_INIT_PNG);
 }
 
 void quit_sdl()

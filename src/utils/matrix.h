@@ -22,7 +22,9 @@ Matrix* add_matrices(Matrix* mat1, Matrix* mat2);
 Matrix* multiply_matrices(Matrix* mat1, Matrix* mat2);
 Matrix* img_to_matrix(SDL_Surface* img); // should not be here...
 Matrix* resize_matrix(Matrix* mat, size_t width, size_t height);
+Matrix* square_matrix_to_column(Matrix* mat);
 void print_matrix(Matrix* mat);
+void print_matrix_double(Matrix* mat);
 void save_matrix(Matrix* mat, char* directory, char* name);
 void load_matrix(Matrix* mat, char* directory, char* name);
 void free_matrix(Matrix* mat);

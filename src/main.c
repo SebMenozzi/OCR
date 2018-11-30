@@ -3,7 +3,8 @@
 #include "ocr_ui.h"
 #include "utils/matrix.h"
 #include "train_ocr.h"
-#include "generate_training_data.h"
+#include "gtd.h"
+#include "gtd_from_seg.h"
 
 void help()
 {
@@ -70,7 +71,14 @@ int main(int argc, char *argv[])
     {
       if (argc == 3)
       {
-        GENERATE_TRAINING_DATA(argv[2]);
+        GTD(argv[2]);
+      }
+    }
+    else if(strcmp(argv[1], "--GTD_FROM_SEG") == 0)
+    {
+      if (argc == 3)
+      {
+        GTD_FROM_SEG(argv[2]);
       }
     }
   }

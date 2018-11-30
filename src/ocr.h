@@ -8,6 +8,7 @@
 #include "utils/segmentation.h"
 #include "utils/matrix.h"
 #include "utils/neural_network.h"
+#include "utils/tools.h"
 
 void OCR(char* file);
 

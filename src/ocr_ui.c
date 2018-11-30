@@ -1,10 +1,13 @@
 #include "ocr_ui.h"
+#include "config.h"
 
 const int WIDTH  = 1300;
 const int HEIGHT = 900;
 
 void OCR_UI(char* file)
 {
+  printf("%s\n", file);
+  /*
   init_sdl();
 
   int quit = 0;
@@ -16,7 +19,7 @@ void OCR_UI(char* file)
   SDL_Surface* image = load_image(file);
   greyscale(image);
   black_and_white(image);
-  horizontal_course(image);
+  horizontal_course(image, RAW_CHARACTERS_PATH, 0);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
 
@@ -50,4 +53,5 @@ void OCR_UI(char* file)
   SDL_DestroyWindow(window);
 
   quit_sdl();
+  */
 }

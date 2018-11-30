@@ -13,7 +13,7 @@ double anwser_data[4] = { 0, 1, 1, 0 };
 
 void print_xor_result(NeuralNetwork network)
 {
-  double output_0_0 = get_network_result(network, training_data[0])->values[0];
+  double output_0_0 = get_network_result(network, training_data[0])->values[0]; // input : 0 / 0 => forward => output layer
   double output_0_1 = get_network_result(network, training_data[1])->values[0];
   double output_1_0 = get_network_result(network, training_data[2])->values[0];
   double output_1_1 = get_network_result(network, training_data[3])->values[0];
@@ -49,7 +49,7 @@ void XOR(int epoch)
         target[0] = anwser_data[j];
         back_propagate(network, target, 0.5, 0.9); // network, target, learning_rate, momentum
 
-        print_error_rate(network);
+        //print_error_rate(network);
       }
     }
   }
