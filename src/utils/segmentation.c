@@ -2,7 +2,9 @@
 #include "../config.h"
 
 // Horizontal course of the image
-void horizontal_course(SDL_Surface* image, void (*fun)(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter))
+void horizontal_course(SDL_Surface* image,
+                       void (*fun)(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter)
+                      )
 {
   size_t counter = 1;
 
@@ -74,6 +76,7 @@ int vertical_course(SDL_Surface* image,
     {
       endcolum = x - 1;
 
+      // function that will be called for each character
       fun(image, startline, endline, startcolum, endcolum, counter);
 
       counter += 1;

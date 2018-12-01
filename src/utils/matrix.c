@@ -3,11 +3,9 @@
 
 Matrix* new_matrix(size_t rows, size_t cols)
 {
-  //Matrix* mat = calloc(rows * cols, sizeof(Matrix) + sizeof(double));
   Matrix* mat = malloc(sizeof(Matrix));
   mat->rows = rows;
   mat->cols = cols;
-  //mat->values = (double*)(mat + 1);
   mat->values = calloc(rows * cols, sizeof(double));
   return mat;
 }
@@ -134,7 +132,7 @@ Matrix* img_to_matrix(SDL_Surface* img)
   {
     for (int x = 0; x < img->w; ++x)
     {
-      double value =  get_value_pixel(img, x, y);
+      double value = get_value_pixel(img, x, y);
       mat->values[y * img->w + x] = value;
     }
   }

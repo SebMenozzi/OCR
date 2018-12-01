@@ -1,8 +1,26 @@
 #include "ocr.h"
 #include "config.h"
 
+int old_startline = -1;
+int old_startcolum = -1;
+
 void extract_characters(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter)
 {
+  // deal with line break
+  if (old_startline != -1 && startline - old_startline != 0) {
+    add_character("data/output.txt", '\n');
+  }
+  else {
+    // deal with spaces
+    if (old_startcolum != -1 && startcolum - old_startcolum > 10) {
+      add_character("data/output.txt", ' ');
+    }
+  }
+  // update old startline
+  old_startline = startline;
+  // update old startline
+  old_startcolum = startcolum;
+
   size_t height = endline - startline,
          width = endcolum - startcolum + 1;
 
@@ -24,7 +42,7 @@ void extract_characters(SDL_Surface* image, int startline, int endline, int star
   // load the network from memory
   load_network(network, "data/ocr");
 
-  print_matrix(inputs);
+  //print_matrix(inputs);
 
   forward_propagate(network, inputs->values);
 
@@ -51,7 +69,7 @@ void extract_characters(SDL_Surface* image, int startline, int endline, int star
     }
   }
   // print the character
-  printf("%zu => %c \n\n", counter, CHARACTERS[max_position]);
+  printf("%zu => %c \n", counter, CHARACTERS[max_position]);
 
   // add character in output.txt
   add_character("data/output.txt", CHARACTERS[max_position]);
@@ -59,6 +77,9 @@ void extract_characters(SDL_Surface* image, int startline, int endline, int star
 
 void OCR(char* file)
 {
+  // clear the output
+  remove("data/output.txt");
+
   init_sdl();
 
   // load the image
@@ -73,4 +94,16 @@ void OCR(char* file)
   SDL_FreeSurface(image);
 
   quit_sdl();
+
+  char* output;
+  int size;
+  size = load_file("data/output.txt", &output);
+	if (size < 0)
+	{
+		printf("Can't read output.txt!\n");
+	}
+  else
+  {
+    printf("%s\n", output);
+  }
 }

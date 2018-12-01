@@ -24,5 +24,6 @@ char* get_file_name(char* path);
 void rmtree(const char path[]);
 void add(char **s, char c);
 void add_character(const char *filepath, const char character);
+int load_file(const char *filename, char **result);
 
 #endif

@@ -48,7 +48,7 @@ char* get_file_name(char* path)
   {
     if (path[i] == '/')
     {
-      return &path[i+1];
+      return &path[i + 1];
     }
   }
   return path;
@@ -129,6 +129,7 @@ void add(char **s, char c)
 void add_character(const char *filepath, const char character)
 {
   FILE* file = fopen(filepath, "a");
+  // convert char into string
   char data[2];
 	data[0] = character;
 	data[1] = '\0'; 	//string always ends with a null character
@@ -138,4 +139,27 @@ void add_character(const char *filepath, const char character)
     fputs(data, file);
     fclose(file);
   }
+}
+
+int load_file(const char *filename, char **result)
+{
+	size_t size = 0;
+	FILE *f = fopen(filename, "rb");
+	if (f == NULL)
+	{
+		*result = NULL;
+		return -1; // -1 means file opening fail
+	}
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	*result = (char*) malloc(size + 1);
+	if (size != fread(*result, sizeof(char), size, f))
+	{
+		free(*result);
+		return -2; // -2 means file reading fail
+	}
+	fclose(f);
+	(*result)[size] = 0;
+	return size;
 }

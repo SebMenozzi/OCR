@@ -27,16 +27,16 @@ void GTD(char* font_path)
 
   font = TTF_OpenFont(font_path, SIZE * SIZE);
 
-  // if the font can't be loaded, next
+  // if the font can't be loaded
   if(!font)
   {
     printf("Unable to load the font %s!\n", filename);
   }
   else
   {
-    // if the font training path doesn't exit : we create the folder
     font_training_directory = create_path(TRAINING_DATA_PATH, filename);
 
+    // if the font training path doesn't exit : we create the folder
     if(folder_exists(font_training_directory) != 0)
     {
       create_folder(font_training_directory);
@@ -60,7 +60,7 @@ void GTD(char* font_path)
       // free the inital character image
       SDL_FreeSurface(character_image);
 
-      // print the 28x28 matrix
+      // print the result matrix
       print_matrix(mat);
 
       // initalize the name of the matrix file with the current character

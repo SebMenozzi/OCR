@@ -62,7 +62,7 @@ void TRAIN_OCR(int epoch)
           back_propagate(network, target->values, 0.5, 0.3); // network, target, learning_rate, momentum
 
           //print_matrix_double(network.output_layer);
-
+          
           print_error_rate(network);
         }
       }
