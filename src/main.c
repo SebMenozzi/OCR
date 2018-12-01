@@ -1,6 +1,6 @@
 #include "xor.h"
 #include "ocr.h"
-#include "ocr_ui.h"
+#include "gtk.h"
 #include "utils/matrix.h"
 #include "train_ocr.h"
 #include "gtd.h"
@@ -46,10 +46,7 @@ int main(int argc, char *argv[])
     }
     else if(strcmp(argv[1], "--OCR_UI") == 0)
     {
-      if (argc == 3)
-      {
-        OCR_UI(argv[2]);
-      }
+      create_window(argc, argv);
     }
     else if(strcmp(argv[1], "--MATRIX") == 0)
     {
