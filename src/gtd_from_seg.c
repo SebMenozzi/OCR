@@ -34,6 +34,10 @@ void GTD_FROM_SEG(char* training_data_path)
   {
     create_folder(TRAINING_DATA_SEG_PATH);
   }
+  else
+  {
+    rmtree(TRAINING_DATA_SEG_PATH);
+  }
 
   // load the image
   SDL_Surface* image = load_image(training_data_path);

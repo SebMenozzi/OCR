@@ -3,6 +3,7 @@
 
 int old_startline = -1;
 int old_startcolum = -1;
+int old_endcolum = -1;
 
 void extract_characters(SDL_Surface* image, int startline, int endline, int startcolum, int endcolum, size_t counter)
 {
@@ -12,14 +13,18 @@ void extract_characters(SDL_Surface* image, int startline, int endline, int star
   }
   else {
     // deal with spaces
-    if (old_startcolum != -1 && startcolum - old_startcolum > 10) {
+    //printf("start: %d\n", startcolum - old_startcolum);
+    //printf("end: %d\n", endcolum - old_endcolum);
+
+    if (old_endcolum != -1 && endcolum - old_endcolum > 15 || startcolum - old_startcolum > 15) 
+    {
       add_character("data/output.txt", ' ');
     }
   }
-  // update old startline
+
   old_startline = startline;
-  // update old startline
   old_startcolum = startcolum;
+  old_endcolum = endcolum;
 
   size_t height = endline - startline,
          width = endcolum - startcolum + 1;
