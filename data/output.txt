@@ -1,2 +1,5 @@
-U n a lg o rithm e e st une suite hnie e t no n a m b ig ue d Po p e ra tio ns o u d Pinstructio ns p e rm e tta nt d e
-re so ud re un p ro b le m e o u d Po b te nir un re sulta t.
+
+) ( , . ! ? '
+0 1 2 3 4 5 6 7 8 9
+A B C D E F G H I J K L M N O P Q R S T U V W X Y
+Z a b c d e f g h i j k l m n o p q r s t u v w x y z

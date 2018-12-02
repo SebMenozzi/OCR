@@ -7,9 +7,9 @@
 
 #define NB_HIDDEN 20
 
-// 6 special characters + 10 digits + 52 letters => 68
-#define CHARACTERS ")(,.!?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-#define NB_CHARACTERS 68
+// 7 special characters + 10 digits + 52 letters => 69
+#define CHARACTERS ")(,.!?'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define NB_CHARACTERS 69
 #define SIZE 20
 
 #endif

@@ -17,6 +17,7 @@ gchar* filename = "";
 SGlobalData data;
 GtkWidget* textview;
 GtkTextBuffer* buffer;
+GtkWidget* image;
 
 void callback_ok()
 {
@@ -40,6 +41,7 @@ void callback_openfile()
   if(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
   {
     filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+    gtk_image_set_from_file(GTK_IMAGE(image), filename); 
   }
   //printf("%s\n", mydata->filename);
   gtk_widget_hide(dialog);
@@ -76,6 +78,8 @@ int create_window(int argc, char** argv)
 	textview = GTK_TEXT_VIEW(gtk_builder_get_object(data.builder, "textview"));
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
 	gtk_text_buffer_set_text(buffer, "Load the image, launch the OCR treatment, then click on \"Open Text\" and see !", -1);
+
+    image = GTK_IMAGE(gtk_builder_get_object(data.builder, "image"));
     
     gtk_builder_connect_signals(data.builder, &data);
 
